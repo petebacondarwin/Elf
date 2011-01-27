@@ -7,7 +7,7 @@ using FluentNHibernate.Automapping;
 namespace Elf.Persistence {
     public class AutomappingConfiguration : DefaultAutomappingConfiguration {
         public override bool ShouldMap(Type type) {
-            return typeof(IPersistent).IsAssignableFrom(type);
+            return typeof(Entities.IPersistent).IsAssignableFrom(type);
         }
     }
 }

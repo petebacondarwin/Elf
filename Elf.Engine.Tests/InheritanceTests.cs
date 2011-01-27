@@ -33,12 +33,12 @@ namespace Elf.Engine.Tests {
         }
 
         IRepository CreateRepository() {
-            return new Repository(
+            IRepository repos = new Repository(
                 new RepositoryConfiguration(
                     FluentNHibernate.Cfg.Db.SQLiteConfiguration.Standard.UsingFile("content.db"),
-                    new AutomappingConfiguration(),
-                    new AppDomainAssemblySelector()));
-
+                    new PersistenceModelProvider(new AutomappingConfiguration(), new AppDomainAssemblySelector())));
+            repos.GenerateDatabaseSchema();
+            return repos;
         }
     }
 }

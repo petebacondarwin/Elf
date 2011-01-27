@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationTests.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="InheritanceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,9 +66,6 @@
       <Project>{F8CFE754-141F-44C5-A101-D58F243888D0}</Project>
       <Name>Elf</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

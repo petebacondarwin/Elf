@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Elf.Persistence {
+namespace Elf.Entities {
     /// <summary>
     /// Classes that implement this interface will be persisted in the database
     /// </summary>

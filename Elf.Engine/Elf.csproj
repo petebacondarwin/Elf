@@ -48,17 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\SectionGroup.cs" />
+    <Compile Include="Entities\AbstractPage.cs" />
     <Compile Include="Persistence\AppDomainAssemblySelector.cs" />
     <Compile Include="Persistence\CascadeConvention.cs" />
     <Compile Include="Engine\ContentEngine.cs" />
     <Compile Include="Entities\ContentItem.cs" />
-    <Compile Include="Configuration\DatabaseSection.cs" />
-    <Compile Include="Persistence\DatabaseConfig.cs" />
-    <Compile Include="Persistence\DatabaseFlavour.cs" />
+    <Compile Include="Persistence\PersistenceModelProvider.cs" />
     <Compile Include="Persistence\IAssemblySelector.cs" />
-    <Compile Include="Persistence\IDatabaseConfig.cs" />
-    <Compile Include="Persistence\IPersistent.cs" />
+    <Compile Include="Persistence\IPersistenceModelProvider.cs" />
+    <Compile Include="Entities\IPersistent.cs" />
     <Compile Include="Persistence\AutomappingConfiguration.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\IRepositoryConfiguration.cs" />
