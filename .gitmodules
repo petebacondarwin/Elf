@@ -2,3 +2,6 @@
 	path = Libraries/ninject
 	url = git://github.com/ninject/ninject.git
 
+[submodule "Libraries/fluent-nhibernate"]
+	path = Libraries/fluent-nhibernate
+	url = git://github.com/jagregory/fluent-nhibernate.git
