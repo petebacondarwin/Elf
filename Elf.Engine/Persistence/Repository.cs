@@ -4,13 +4,36 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
+using Elf.Persistence.Configuration;
 
 namespace Elf.Persistence {
-    public class Repository : IRepository {
-        IRepositoryConfiguration repositoryConfiguration;
-        ISessionFactory sessionFactory;
+    /// <summary>
+    /// Describes the service that provides access to the repository of persistent objects
+    /// </summary>
+    public interface IRepository : IDisposable {
+        /// <summary>
+        /// Open a new session for working with persistent objects
+        /// </summary>
+        /// <returns>A open session</returns>
+        ISession OpenSession();
+        /// <summary>
+        /// Drop and recreate the schema (tables and contraints) in the database
+        /// /// </summary>
+        void GenerateDatabaseSchema();
+        /// <summary>
+        /// Attempt to update the schema (tables and contraints) in the database
+        /// /// </summary>
+        void UpdateDatabaseSchema();
+    }
 
-        public Repository(IRepositoryConfiguration repositoryConfiguration) {
+    /// <summary>
+    /// Used to access the repository of persistent objects.
+    /// </summary>
+    public class Repository : IRepository {
+        readonly RepositoryConfigurationProvider repositoryConfiguration;
+        readonly ISessionFactory sessionFactory;
+
+        public Repository(RepositoryConfigurationProvider repositoryConfiguration) {
             this.repositoryConfiguration = repositoryConfiguration;
             this.sessionFactory = this.repositoryConfiguration.NHConfiguration.BuildSessionFactory();
         }
@@ -18,10 +41,14 @@ namespace Elf.Persistence {
             return sessionFactory.OpenSession();
         }
         public void GenerateDatabaseSchema() {
-            new SchemaExport(repositoryConfiguration.NHConfiguration).Create(true, true);
+            new SchemaExport(repositoryConfiguration.NHConfiguration).Create(false, true);
         }
         public void UpdateDatabaseSchema() {
-            new SchemaUpdate(repositoryConfiguration.NHConfiguration).Execute(true, true);
+            new SchemaUpdate(repositoryConfiguration.NHConfiguration).Execute(false, true);
+        }
+
+        public void Dispose() {
+            sessionFactory.Dispose();
         }
     }
 }

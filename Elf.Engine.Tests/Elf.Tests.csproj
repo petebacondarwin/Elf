@@ -8,8 +8,8 @@
     <ProjectGuid>{41CE3603-58B9-47B8-81C2-208E43BC2EE5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Elf.Engine.Tests</RootNamespace>
-    <AssemblyName>Elf.Engine.Tests</AssemblyName>
+    <RootNamespace>Elf.Tests</RootNamespace>
+    <AssemblyName>Elf.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,9 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentFinderTests.cs" />
     <Compile Include="Entities\Entities.cs" />
-    <Compile Include="InheritanceTests.cs" />
+    <Compile Include="RepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\fluent-nhibernate\src\FluentNHibernate\FluentNHibernate.csproj">

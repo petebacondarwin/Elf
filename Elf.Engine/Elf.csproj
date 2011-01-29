@@ -48,20 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\AbstractPage.cs" />
-    <Compile Include="Persistence\AppDomainAssemblySelector.cs" />
-    <Compile Include="Persistence\CascadeConvention.cs" />
-    <Compile Include="Engine\ContentEngine.cs" />
+    <Compile Include="Persistence\Configuration\AssemblySelectors\SpecifiedAssemblySelector.cs" />
+    <Compile Include="Persistence\Configuration\AssemblySelectors\IAssemblySelector.cs" />
+    <Compile Include="Persistence\Configuration\AssemblySelectors\EntryAssemblySelector.cs" />
+    <Compile Include="Persistence\ContentFinder.cs" />
+    <Compile Include="Persistence\Configuration\AssemblySelectors\AppDomainAssemblySelector.cs" />
     <Compile Include="Entities\ContentItem.cs" />
-    <Compile Include="Persistence\PersistenceModelProvider.cs" />
-    <Compile Include="Persistence\IAssemblySelector.cs" />
-    <Compile Include="Persistence\IPersistenceModelProvider.cs" />
+    <Compile Include="Persistence\Configuration\PersistenceModel\DefaultPersistenceModelProvider.cs" />
     <Compile Include="Entities\IPersistent.cs" />
-    <Compile Include="Persistence\AutomappingConfiguration.cs" />
-    <Compile Include="Persistence\IRepository.cs" />
-    <Compile Include="Persistence\IRepositoryConfiguration.cs" />
+    <Compile Include="Persistence\Configuration\AutoMapping\DefaultAutoMappingProvider.cs" />
     <Compile Include="Persistence\Repository.cs" />
-    <Compile Include="Persistence\RepositoryConfiguration.cs" />
+    <Compile Include="Persistence\Configuration\RepositoryConfigurationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
