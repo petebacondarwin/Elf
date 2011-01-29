@@ -61,7 +61,7 @@
     <Compile Include="TestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Elf.Engine\Elf.csproj">
+    <ProjectReference Include="..\Elf\Elf.csproj">
       <Project>{F8CFE754-141F-44C5-A101-D58F243888D0}</Project>
       <Name>Elf</Name>
     </ProjectReference>

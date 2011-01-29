@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elf", "Elf.Engine\Elf.csproj", "{F8CFE754-141F-44C5-A101-D58F243888D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elf", "Elf\Elf.csproj", "{F8CFE754-141F-44C5-A101-D58F243888D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elf.Tests", "Elf.Engine.Tests\Elf.Tests.csproj", "{41CE3603-58B9-47B8-81C2-208E43BC2EE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elf.Tests", "Elf.Tests\Elf.Tests.csproj", "{41CE3603-58B9-47B8-81C2-208E43BC2EE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentNHibernate", "Libraries\fluent-nhibernate\src\FluentNHibernate\FluentNHibernate.csproj", "{529145D5-6CC3-4016-89B5-826563024AF1}"
 EndProject
