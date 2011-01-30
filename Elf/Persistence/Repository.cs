@@ -12,10 +12,19 @@ namespace Elf.Persistence {
     /// </summary>
     public interface IRepository : IDisposable {
         /// <summary>
-        /// Open a new session for working with persistent objects
+        /// Gets the current persistence session
         /// </summary>
-        /// <returns>A open session</returns>
-        ISession OpenSession();
+        ISession CurrentSession { get; }
+
+        /// <summary>
+        /// Begin a transaction wrapped session and store it in the CurrentSessionContext
+        /// </summary>
+        void BeginSession();
+        /// <summary>
+        /// End a session, committing the transaction if necessary removing it from the CurrentSessionContext
+        /// </summary>
+        void EndSession();
+        
         /// <summary>
         /// Drop and recreate the schema (tables and contraints) in the database
         /// /// </summary>
@@ -37,9 +46,39 @@ namespace Elf.Persistence {
             this.repositoryConfiguration = repositoryConfiguration;
             this.sessionFactory = this.repositoryConfiguration.NHConfiguration.BuildSessionFactory();
         }
-        public ISession OpenSession() {
-            return sessionFactory.OpenSession();
+
+        /// <summary>
+        /// Get the current persistence session
+        /// </summary>
+        public ISession CurrentSession {
+            get {
+                return sessionFactory.GetCurrentSession();
+            }
         }
+
+        /// <summary>
+        /// Begin a transaction wrapped session and store it in the CurrentSessionContext
+        /// </summary>
+        public void BeginSession() {
+            ISession session = sessionFactory.OpenSession();
+            session.BeginTransaction();
+            NHibernate.Context.CurrentSessionContext.Bind(session);
+        }
+
+        /// <summary>
+        /// End a session, committing the transaction if necessary removing it from the CurrentSessionContext
+        /// </summary>
+        public void EndSession() {
+            ISession session = NHibernate.Context.CurrentSessionContext.Unbind(sessionFactory);
+            if (session != null) {
+                if (session.Transaction != null) {
+                    if (session.Transaction.IsActive) {
+                        session.Transaction.Commit();
+                    }
+                }
+            }
+        }
+
         public void GenerateDatabaseSchema() {
             new SchemaExport(repositoryConfiguration.NHConfiguration).Create(false, true);
         }

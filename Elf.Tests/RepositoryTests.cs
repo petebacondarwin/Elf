@@ -13,43 +13,33 @@ namespace Elf.Tests {
     public class RepositoryTests {
         [Test]
         public void TestNavigatingParentChildRelationship() {
-            using (IRepository repository = TestRepository.Instance()) {
-                using (var session = repository.OpenSession()) {
-                    var query = session.CreateCriteria<Page>().Add(Expression.Eq("UrlSegment", "grand-child"));
-                    IList<Page> pages = query.List<Page>();
+            IRepository repository = TestRepositoryFixture.Instance();
+            var session = repository.CurrentSession;
+            var query = session.CreateCriteria<Page>().Add(Expression.Eq("UrlSegment", "grand-child"));
+            IList<Page> pages = query.List<Page>();
 
-                    Assert.That(pages, Has.Count.EqualTo(2));
-                    Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
+            Assert.That(pages, Has.Count.EqualTo(2));
+            Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
 
-                    query.CreateCriteria("Parent").Add(Expression.Eq("UrlSegment", "child"));
-                    pages = query.List<Page>();
+            query.CreateCriteria("Parent").Add(Expression.Eq("UrlSegment", "child"));
+            pages = query.List<Page>();
 
-                    Assert.That(pages, Has.Count.EqualTo(1));
-                    Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
-                }
-            }
+            Assert.That(pages, Has.Count.EqualTo(1));
+            Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
         }
 
         [Test]
         public void TestRetrieveByContentItem() {
-            using (IRepository repository = TestRepository.Instance()) {
-                using (var session = repository.OpenSession()) {
-                    using (var transaction = session.BeginTransaction()) {
-                        Page page = new Page { Title = "Page 1", BodyText = "Body 1", UrlSegment = "page-1" };
-                        HomePage home = new HomePage { Title = "Home", BodyText = "Home Body", UrlSegment = "~" };
-                        home.AddChildren(page);
-                        session.Save(home);
-                        transaction.Commit();
-                    }
-                }
-                using (var session = repository.OpenSession()) {
-                    var contentItems = session.CreateCriteria<ContentItem>().List();
-                    Assert.That(contentItems.Count, Is.GreaterThan(0));
-                }
-            }
+            IRepository repository = TestRepositoryFixture.Instance();
+            var session = repository.CurrentSession;
+            Page page = new Page { Title = "Page 1", BodyText = "Body 1", UrlSegment = "page-1" };
+            HomePage home = new HomePage { Title = "Home", BodyText = "Home Body", UrlSegment = "~" };
+            home.AddChildren(page);
+            session.Save(home);
+
+            var contentItems = session.CreateCriteria<ContentItem>().List();
+            Assert.That(contentItems.Count, Is.GreaterThan(0));
         }
-
-
     }
 }
 

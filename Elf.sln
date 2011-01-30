@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elf.Tests", "Elf.Tests\Elf.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentNHibernate", "Libraries\fluent-nhibernate\src\FluentNHibernate\FluentNHibernate.csproj", "{529145D5-6CC3-4016-89B5-826563024AF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elf.Web.Mvc.TestSite", "Elf.Web.Mvc.TestSite\Elf.Web.Mvc.TestSite.csproj", "{2F6BE043-46EE-4ADE-B8CE-A680B9179CAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{529145D5-6CC3-4016-89B5-826563024AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{529145D5-6CC3-4016-89B5-826563024AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{529145D5-6CC3-4016-89B5-826563024AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6BE043-46EE-4ADE-B8CE-A680B9179CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6BE043-46EE-4ADE-B8CE-A680B9179CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F6BE043-46EE-4ADE-B8CE-A680B9179CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F6BE043-46EE-4ADE-B8CE-A680B9179CAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

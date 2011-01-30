@@ -35,22 +35,22 @@ namespace Elf.Persistence {
 
         public virtual ContentItem Find(string url) {
             IList<string> urlSegments = url.Split('/').Reverse().ToList();
-            using (var session = repository.OpenSession()) {
-                if (urlSegments.Count > 0) {
-                    ICriteria criteria = session.CreateCriteria<ContentItem>();
-                    AddUrlSegmentExpression(criteria, urlSegments.First());
-                    foreach (string urlSegment in urlSegments.Skip(1)) {
-                        criteria = criteria.CreateCriteria("Parent");
-                        AddUrlSegmentExpression(criteria, urlSegment);
-                    }
-                    try {
-                        return criteria.UniqueResult<ContentItem>();
-                    } catch (NonUniqueResultException x) {
-                        throw new Exception("The url provided does not uniquely identify a Content Item in the repository",x);
-                    }
-                } else {
-                    return null;
+            var session = repository.CurrentSession;
+            if (urlSegments.Count > 0) {
+                ICriteria criteria = session.CreateCriteria<ContentItem>();
+                AddUrlSegmentExpression(criteria, urlSegments.First());
+                foreach (string urlSegment in urlSegments.Skip(1)) {
+                    criteria = criteria.CreateCriteria("Parent");
+                    AddUrlSegmentExpression(criteria, urlSegment);
                 }
+                criteria.Add(Expression.IsNull("Parent"));
+                try {
+                    return criteria.UniqueResult<ContentItem>();
+                } catch (NonUniqueResultException x) {
+                    throw new Exception("The url provided does not uniquely identify a Content Item in the repository", x);
+                }
+            } else {
+                return null;
             }
         }
 
