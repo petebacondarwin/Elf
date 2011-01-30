@@ -15,13 +15,13 @@ namespace Elf.Tests {
         public void TestNavigatingParentChildRelationship() {
             IRepository repository = TestRepositoryFixture.Instance();
             var session = repository.CurrentSession;
-            var query = session.CreateCriteria<Page>().Add(Expression.Eq("UrlSegment", "grand-child"));
+            var query = session.CreateCriteria<Page>().Add(Restrictions.Eq("UrlSegment", "grand-child"));
             IList<Page> pages = query.List<Page>();
 
             Assert.That(pages, Has.Count.EqualTo(2));
             Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
 
-            query.CreateCriteria("Parent").Add(Expression.Eq("UrlSegment", "child"));
+            query.CreateCriteria("Parent").Add(Restrictions.Eq("UrlSegment", "child"));
             pages = query.List<Page>();
 
             Assert.That(pages, Has.Count.EqualTo(1));
