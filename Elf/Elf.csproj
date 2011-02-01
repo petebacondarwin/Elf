@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\fluent-nhibernate\tools\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\Libraries\Ninject\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -49,17 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistence\Modules\CoreModule.cs" />
+    <Compile Include="Persistence\Configuration\AssemblySelectors\NoDynamicAssemblySelector.cs" />
     <Compile Include="Persistence\Configuration\AssemblySelectors\SpecifiedAssemblySelector.cs" />
     <Compile Include="Persistence\Configuration\AssemblySelectors\IAssemblySelector.cs" />
     <Compile Include="Persistence\Configuration\AssemblySelectors\EntryAssemblySelector.cs" />
+    <Compile Include="Persistence\Configuration\ConfigurationProvider.cs" />
+    <Compile Include="Persistence\SchemaManagement.cs" />
+    <Compile Include="Persistence\Configuration\PersistenceModelProvider.cs" />
     <Compile Include="Persistence\ContentFinder.cs" />
     <Compile Include="Persistence\Configuration\AssemblySelectors\AppDomainAssemblySelector.cs" />
-    <Compile Include="Entities\ContentItem.cs" />
-    <Compile Include="Persistence\Configuration\PersistenceModel\DefaultPersistenceModelProvider.cs" />
-    <Compile Include="Entities\IPersistent.cs" />
-    <Compile Include="Persistence\Configuration\AutoMapping\DefaultAutoMappingProvider.cs" />
-    <Compile Include="Persistence\Repository.cs" />
-    <Compile Include="Persistence\Configuration\RepositoryConfigurationProvider.cs" />
+    <Compile Include="Persistence\Entities\ContentItem.cs" />
+    <Compile Include="Persistence\Entities\IPersistent.cs" />
+    <Compile Include="Persistence\Configuration\AutoMappingConfiguration.cs" />
+    <Compile Include="Persistence\Configuration\SessionFactoryProvider.cs" />
+    <Compile Include="Persistence\Configuration\SessionProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

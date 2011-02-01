@@ -5,7 +5,7 @@ using System.Text;
 using Elf.Persistence;
 using NHibernate;
 using NHibernate.Criterion;
-using Elf.Entities;
+using Elf.Persistence.Entities;
 
 namespace Elf.Persistence {
     /// <summary>
@@ -26,14 +26,13 @@ namespace Elf.Persistence {
         const string UrlSegmentFieldName = "UrlSegment";
         const string ParentFieldName = "Parent";
 
-        readonly IRepository repository;
+        readonly ISession session;
 
         /// <summary>
-        /// Create a ContentFinder that looks in the specified repository.
+        /// Create an ContentFinder to work with the specified session
         /// </summary>
-        /// <param name="repository">The repository in which to search.</param>
-        public ContentFinder(IRepository repository) {
-            this.repository = repository;
+        public ContentFinder(ISession session) {
+            this.session = session;
         }
 
         /// <summary>
@@ -49,7 +48,6 @@ namespace Elf.Persistence {
         /// <exception cref="System.Exception">If more than one content item matches the url</exception>
         public virtual ContentItem Find(string url) {
             IList<string> urlSegments = url.Split('/').Reverse().ToList();
-            var session = repository.CurrentSession;
             if (urlSegments.Count > 0) {
                 ICriteria criteria = session.CreateCriteria<ContentItem>();
                 AddUrlSegmentExpression(criteria, urlSegments.First());

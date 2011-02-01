@@ -1,5 +1,5 @@
 ﻿using System;
-using Elf.Entities;
+using Elf.Persistence.Entities;
 
 namespace Elf.Tests.Entities {
     /// <summary>
