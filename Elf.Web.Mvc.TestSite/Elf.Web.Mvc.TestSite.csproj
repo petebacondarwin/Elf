@@ -70,13 +70,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Modules\Database\DatabaseConfiguration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Modules\Main\Controllers\PageController.cs" />
+    <Compile Include="Modules\Main\SiteSettings.cs" />
+    <Compile Include="Modules\Main\Models\Page.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,21 +122,21 @@
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\Account\LogOn.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Modules\Main\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Elf.Web.Mvc\Elf.Web.Mvc.csproj">
+      <Project>{00BC7CC8-B325-4B23-882C-F02E20D019AD}</Project>
+      <Name>Elf.Web.Mvc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Elf\Elf.csproj">
       <Project>{F8CFE754-141F-44C5-A101-D58F243888D0}</Project>
       <Name>Elf</Name>
@@ -145,6 +145,25 @@
       <Project>{529145D5-6CC3-4016-89B5-826563024AF1}</Project>
       <Name>FluentNHibernate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Page\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Page\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Page\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Page\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\Main\Views\Page\Create.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Details.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Edit.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Index.cshtml" />
+    <Content Include="Modules\Main\Views\Web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F8CFE754-141F-44C5-A101-D58F243888D0}</ProjectGuid>
+    <ProjectGuid>{00BC7CC8-B325-4B23-882C-F02E20D019AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Elf</RootNamespace>
-    <AssemblyName>Elf</AssemblyName>
+    <RootNamespace>Elf.Web.Mvc</RootNamespace>
+    <AssemblyName>Elf.Web.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,44 +31,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NHibernate, Version=3.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\fluent-nhibernate\tools\NHibernate\NHibernate.dll</HintPath>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\Libraries\fluent-nhibernate\src\FluentNHibernate\bin\Debug\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle, Version=3.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\fluent-nhibernate\tools\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
+    <Reference Include="NHibernate">
+      <HintPath>..\Libraries\fluent-nhibernate\src\FluentNHibernate\bin\Debug\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\Libraries\Ninject\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AssemblyList.cs" />
-    <Compile Include="Configuration\BaseSettings.cs" />
-    <Compile Include="Configuration\CoreModule.cs" />
-    <Compile Include="Persistence\Configuration\ConfigurationProvider.cs" />
-    <Compile Include="Persistence\SchemaManager.cs" />
-    <Compile Include="Persistence\Configuration\PersistenceModelProvider.cs" />
-    <Compile Include="Persistence\ContentFinder.cs" />
-    <Compile Include="Persistence\Entities\ContentItem.cs" />
-    <Compile Include="Persistence\Entities\IPersistent.cs" />
-    <Compile Include="Persistence\Configuration\AutoMappingConfiguration.cs" />
-    <Compile Include="Persistence\Configuration\SessionFactoryProvider.cs" />
-    <Compile Include="Persistence\Configuration\SessionProvider.cs" />
+    <Compile Include="Routing\ContentMvcHandler.cs" />
+    <Compile Include="Routing\ContentRoute.cs" />
+    <Compile Include="Routing\ContentRouteHandler.cs" />
+    <Compile Include="ControllerFinder.cs" />
+    <Compile Include="MvcModule.cs" />
+    <Compile Include="MvcSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\fluent-nhibernate\src\FluentNHibernate\FluentNHibernate.csproj">
-      <Project>{529145D5-6CC3-4016-89B5-826563024AF1}</Project>
-      <Name>FluentNHibernate</Name>
+    <ProjectReference Include="..\Elf\Elf.csproj">
+      <Project>{F8CFE754-141F-44C5-A101-D58F243888D0}</Project>
+      <Name>Elf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

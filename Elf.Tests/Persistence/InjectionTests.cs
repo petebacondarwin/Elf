@@ -1,20 +1,22 @@
-﻿using System.Linq;
-using Elf.Persistence.Configuration;
-using Elf.Persistence.Configuration.AssemblySelectors;
-using Elf.Tests.Persistence;
-using FluentNHibernate.Automapping;
-using NHibernate;
-using Ninject;
-using NUnit.Framework;
+﻿namespace Elf.Tests {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Elf.Persistence.Configuration;
+    using Elf.Tests.Persistence;
+    using FluentNHibernate.Automapping;
+    using NHibernate;
+    using Ninject;
+    using NUnit.Framework;
+    using Elf.Configuration;
 
-namespace Elf.Tests {
     [TestFixture]
     public class InjectionTests {
         [Test]
         public void TestElfBindings() {
-            using (var kernel = new StandardKernel(new TestModule())) {
-                var selector = kernel.Get<IAssemblySelector>();
-                Assert.That(selector, Is.InstanceOf<AppDomainAssemblySelector>());
+            using (var kernel = TestHelper.CreateKernel()) {
+                var assemblies = kernel.Get<AssemblyList>();
+                Assert.That(assemblies, Has.Count.EqualTo(2));
 
                 var mappingConfig = kernel.Get<IAutomappingConfiguration>();
                 Assert.That(mappingConfig, Is.InstanceOf<AutoMappingConfiguration>());

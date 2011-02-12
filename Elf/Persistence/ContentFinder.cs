@@ -47,7 +47,7 @@ namespace Elf.Persistence {
         /// <returns>The content item with the given url or null if none exists</returns>
         /// <exception cref="System.Exception">If more than one content item matches the url</exception>
         public virtual ContentItem Find(string url) {
-            IList<string> urlSegments = url.Split('/').Reverse().ToList();
+            IList<string> urlSegments = url.Split(new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Reverse().ToList();
             if (urlSegments.Count > 0) {
                 ICriteria criteria = session.CreateCriteria<ContentItem>();
                 AddUrlSegmentExpression(criteria, urlSegments.First());

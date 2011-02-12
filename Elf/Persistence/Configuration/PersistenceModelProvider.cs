@@ -1,23 +1,25 @@
-﻿using System.Linq;
-using FluentNHibernate.Automapping;
-using FluentNHibernate.Conventions.Helpers;
+﻿namespace Elf.Persistence.Configuration {
+    using System.Linq;
+    using FluentNHibernate.Automapping;
+    using FluentNHibernate.Conventions.Helpers;
+    using System.Collections.Generic;
+    using Elf.Configuration;
 
-namespace Elf.Persistence.Configuration {
     /// <summary>
     /// Provide an Auto Persistence Model to the injection container.
     /// </summary>
     public class PersistenceModelProvider : Ninject.Activation.Provider<AutoPersistenceModel> {
         readonly IAutomappingConfiguration configuration;
-        readonly AssemblySelectors.IAssemblySelector assemblySelector;
+        readonly AssemblyList assemblies;
 
         /// <summary>
         /// Create a new provider from an Auto Mapping configuration and an Assembly Selector
         /// </summary>
         /// <param name="configuration">The Auto Mapping configuration</param>
         /// <param name="assemblySelector">The Assembly Selector</param>
-        public PersistenceModelProvider(IAutomappingConfiguration configuration, AssemblySelectors.IAssemblySelector assemblySelector) {
+        public PersistenceModelProvider(IAutomappingConfiguration configuration, AssemblyList assemblies) {
             this.configuration = configuration;
-            this.assemblySelector = assemblySelector;
+            this.assemblies = assemblies;
         }
  
         /// <summary>
@@ -38,11 +40,8 @@ namespace Elf.Persistence.Configuration {
         /// Create an instance of the Auto Persistence Model
         /// </summary>
         protected override AutoPersistenceModel CreateInstance(Ninject.Activation.IContext context) {
-            var assemblies = assemblySelector.SelectAssemblies();
-            if (assemblies.Any(a => a.IsDynamic)) {
-                throw new System.InvalidOperationException("The assembly selector must not select dynamic assemblies as the automapper cannot cope with them");
-            }
-            AutoPersistenceModel model = AutoMap.Assemblies(configuration, assemblies);
+            // Ensure that no dynamic assemblies are selected as the automapping does not like them
+            AutoPersistenceModel model = AutoMap.Assemblies(configuration, assemblies.Where(assembly => !assembly.IsDynamic).ToArray());
             AddConventions(model);
             return model;
         }
