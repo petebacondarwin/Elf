@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using Castle.DynamicProxy;
+using Xunit;
 
 namespace Elf.Tests.Persistence {
-    [TestFixture]
     public class ProxyTests {
-        [Test]
+        [Fact]
         public void TestSimpleProxy() {
             var square = new AShape("Square");
             var red = new AColor("Red");
             IColoredShape coloredShape = CreateColoredShapeMixin(square, red);
-            Assert.That(coloredShape.Color, Is.EqualTo("Red"));
-            Assert.That(coloredShape.Shape, Is.EqualTo("Square"));
-            Assert.That(coloredShape.Describe(), Is.EqualTo("A Red Square"));
+            Assert.Equal("Red", coloredShape.Color);
+            Assert.Equal("Square", coloredShape.Shape);
+            Assert.Equal("A Red Square", coloredShape.Describe());
         }
 
         public IColoredShape CreateColoredShapeMixin(IHasShape shape, IHasColor color) {

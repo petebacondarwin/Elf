@@ -5,7 +5,17 @@
     using Ninject;
     using Ninject.Modules;
 
+    /// <summary>
+    /// The basic settings for the system.
+    /// </summary>
+    /// <remarks>
+    /// To modify these basic settings you can either instantiate the class and access its properties
+    /// or more cleanly derive from it and implement your modifications in the derived class's constructor.
+    /// </remarks>
     public class BaseSettings {
+        /// <summary>
+        /// Create a basic settings object for configuring the system.
+        /// </summary>
         public BaseSettings() {
             Modules = new List<INinjectModule>();
             Assemblies = new AssemblyList();
@@ -93,7 +103,7 @@
         /// pass them a new ISession.
         /// </remarks>
         private void SetupDefaultDatabase() {
-            DatabaseSettings = SQLiteConfiguration.Standard.InMemory().ShowSql();
+            DatabaseSettings = SQLiteConfiguration.Standard.InMemory();//.ShowSql();
         }
     }
 }

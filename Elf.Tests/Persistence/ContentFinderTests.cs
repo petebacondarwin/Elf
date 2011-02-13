@@ -1,12 +1,11 @@
 ﻿using Elf.Persistence;
-using NUnit.Framework;
 using NHibernate;
 using Ninject;
+using Xunit;
 
 namespace Elf.Tests.Persistence {
-    [TestFixture]
     public class ContentFinderTests {
-        [Test]
+        [Fact]
         public void TestFind() {
             using (var kernel = TestHelper.CreateKernel()) {
                 using (ISession session = kernel.Get<ISession>()) {
@@ -15,23 +14,23 @@ namespace Elf.Tests.Persistence {
                     IContentFinder contentFinder = new ContentFinder(session);
 
                     Page page = contentFinder.Find<Page>("~/child/grand-child");
-                    Assert.That(page, Is.Not.Null);
-                    Assert.That(page.Title, Is.EqualTo("Grand Child"));
+                    Assert.NotNull(page);
+                    Assert.Equal("Grand Child", page.Title);
 
                     page = contentFinder.Find<Page>("~");
-                    Assert.That(page, Is.Not.Null);
-                    Assert.That(page.Title, Is.EqualTo("Parent"));
-                    Assert.That(page.Parent, Is.Null);
-                    Assert.That(page, Is.InstanceOf<HomePage>());
+                    Assert.NotNull(page);
+                    Assert.Equal("Parent", page.Title);
+                    Assert.Null(page.Parent);
+                    Assert.IsType<HomePage>(page);
 
                     page = contentFinder.Find<Page>("~/child/other");
-                    Assert.That(page, Is.Null);
+                    Assert.Null(page);
                 }
             }
         }
 
-        [Test, ExpectedException()]
-        public void TestFindNonUniqueUrl() {
+        [Fact]
+        public void NonUniqueUrlThrowsException() {
             using (var kernel = TestHelper.CreateKernel()) {
                 using (var session = kernel.Get<ISession>()) {
                     DatabaseHelper.GenerateDatabase(session);
@@ -42,7 +41,9 @@ namespace Elf.Tests.Persistence {
                     session.Save(home2);
 
                     IContentFinder contentFinder = new ContentFinder(session);
-                    Page page = contentFinder.Find<Page>("~/child");
+                    Assert.Throws<System.Exception>(()=>
+                        contentFinder.Find<Page>("~/child")
+                    );
                 }
             }
         }

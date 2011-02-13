@@ -11,7 +11,7 @@ namespace Elf.Tests.Web.Mvc {
         StubHttpRequestForRouting _request;
         StubHttpResponseForRouting _response;
 
-        public StubHttpContextForRouting(string appPath = "/", string requestUrl = "~/") {
+        public StubHttpContextForRouting(string requestUrl = "~/", string appPath = "/") {
             _request = new StubHttpRequestForRouting(appPath, requestUrl);
             _response = new StubHttpResponseForRouting();
         }

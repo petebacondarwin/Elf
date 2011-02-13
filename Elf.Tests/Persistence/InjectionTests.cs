@@ -1,39 +1,35 @@
 ﻿namespace Elf.Tests {
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
+    using Elf.Configuration;
     using Elf.Persistence.Configuration;
-    using Elf.Tests.Persistence;
     using FluentNHibernate.Automapping;
     using NHibernate;
     using Ninject;
-    using NUnit.Framework;
-    using Elf.Configuration;
+    using Xunit;
 
-    [TestFixture]
     public class InjectionTests {
-        [Test]
+        [Fact]
         public void TestElfBindings() {
             using (var kernel = TestHelper.CreateKernel()) {
                 var assemblies = kernel.Get<AssemblyList>();
-                Assert.That(assemblies, Has.Count.EqualTo(2));
+                Assert.Equal(2, assemblies.Count);
 
                 var mappingConfig = kernel.Get<IAutomappingConfiguration>();
-                Assert.That(mappingConfig, Is.InstanceOf<AutoMappingConfiguration>());
+                Assert.IsType<AutoMappingConfiguration>(mappingConfig);
 
                 var NHConfig = kernel.Get<NHibernate.Cfg.Configuration>();
-                Assert.That(NHConfig, Is.InstanceOf<NHibernate.Cfg.Configuration>());
+                Assert.IsType<NHibernate.Cfg.Configuration>(NHConfig);
 
                 var persistenceModel = kernel.Get<AutoPersistenceModel>();
-                Assert.That(persistenceModel, Is.InstanceOf<AutoPersistenceModel>());
-                Assert.That(persistenceModel.Conventions.Find<FluentNHibernate.Conventions.IConvention>().Count(), Is.EqualTo(2));
+                Assert.IsType<AutoPersistenceModel>(persistenceModel);
+                Assert.Equal(2, persistenceModel.Conventions.Find<FluentNHibernate.Conventions.IConvention>().Count());
 
                 var sessionFactory = kernel.Get<ISessionFactory>();
-                Assert.That(sessionFactory, Is.Not.Null);
-                Assert.That(sessionFactory.GetClassMetadata(typeof(Elf.Persistence.Entities.ContentItem)), Is.Not.Null);
+                Assert.NotNull(sessionFactory);
+                Assert.NotNull(sessionFactory.GetClassMetadata(typeof(Elf.Persistence.Entities.ContentItem)));
 
                 var session = kernel.Get<ISession>();
-                Assert.That(session, Is.Not.Null);
+                Assert.NotNull(session);
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Elf.Web.Mvc.TestSite {
 
         public void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.Add(new ContentRoute(Kernel.Get<IContentFinder>(), Kernel.Get<IControllerFinder>()));
+            routes.Add(new ContentRoute(Kernel.Get<IContentFinder>()));
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters

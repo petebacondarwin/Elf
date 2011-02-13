@@ -6,11 +6,9 @@
 
     public class ContentRoute : System.Web.Routing.RouteBase {
         readonly IContentFinder contentFinder;
-        readonly IControllerFinder controllerFinder;
         readonly IRouteHandler handler;
-        public ContentRoute(IContentFinder contentFinder, IControllerFinder controllerFinder) {
+        public ContentRoute(IContentFinder contentFinder) {
             this.contentFinder = contentFinder;
-            this.controllerFinder = controllerFinder;
             this.handler = new ContentRouteHandler();
         }
 

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Elf.Persistence;
-using NHibernate.Criterion;
 using Elf.Persistence.Entities;
-using Ninject;
 using NHibernate;
+using NHibernate.Criterion;
+using Ninject;
+using Xunit;
 
 namespace Elf.Tests.Persistence {
-    [TestFixture]
     public class EntityPersistenceTests {
-        [Test]
+        [Fact]
         public void TestNavigatingParentChildRelationship() {
             using (var kernel = TestHelper.CreateKernel()) {
                 using (var session = kernel.Get<ISession>()) {
@@ -21,19 +17,19 @@ namespace Elf.Tests.Persistence {
                     var query = session.CreateCriteria<Page>().Add(Restrictions.Eq("UrlSegment", "grand-child"));
                     IList<Page> pages = query.List<Page>();
 
-                    Assert.That(pages, Has.Count.EqualTo(2));
-                    Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
+                    Assert.Equal(2, pages.Count);
+                    Assert.True(pages.All(p => p.UrlSegment == "grand-child"));
 
                     query.CreateCriteria("Parent").Add(Restrictions.Eq("UrlSegment", "child"));
                     pages = query.List<Page>();
 
-                    Assert.That(pages, Has.Count.EqualTo(1));
-                    Assert.That(pages.All(p => p.UrlSegment == "grand-child"));
+                    Assert.Equal(1, pages.Count);
+                    Assert.True(pages.All(p => p.UrlSegment == "grand-child"));
                 }
             }
         }
 
-        [Test]
+        [Fact]
         public void TestRetrieveByContentItem() {
             using (var kernel = TestHelper.CreateKernel()) {
                 using (var session = kernel.Get<ISession>()) {
@@ -45,7 +41,7 @@ namespace Elf.Tests.Persistence {
                     session.Save(home);
 
                     var contentItems = session.CreateCriteria<ContentItem>().List();
-                    Assert.That(contentItems.Count, Is.GreaterThan(0));
+                    Assert.Equal(7, contentItems.Count);
                 }
             }
         }
