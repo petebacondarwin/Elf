@@ -8,6 +8,7 @@
         /// </summary>
         public override void Load() {
             Kernel.Bind<IControllerFinder>().To<ControllerFinder>().InSingletonScope();
+            Kernel.Bind<Routing.ContentRoute>().ToSelf();
         }
     }
 }

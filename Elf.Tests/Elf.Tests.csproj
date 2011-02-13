@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Persistence\DatabaseSetup.cs" />
     <Compile Include="TestHelper.cs" />
+    <Compile Include="Web.Mvc\ContentRouteHandlerTests.cs" />
     <Compile Include="Web.Mvc\ControllerFinderTests.cs" />
     <Compile Include="Web.Mvc\HttpContextStubs.cs" />
     <Compile Include="Web.Mvc\RoutingTests.cs" />

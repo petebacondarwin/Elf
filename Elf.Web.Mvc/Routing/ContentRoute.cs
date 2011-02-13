@@ -3,13 +3,16 @@
     using System.Web.Routing;
     using Elf.Persistence;
     using Elf.Persistence.Entities;
+    using Elf.Web.Mvc.Utils;
 
     public class ContentRoute : System.Web.Routing.RouteBase {
         readonly IContentFinder contentFinder;
+        readonly IControllerFinder controllerFinder;
         readonly IRouteHandler handler;
-        public ContentRoute(IContentFinder contentFinder) {
+        public ContentRoute(IContentFinder contentFinder, IControllerFinder controllerFinder) {
             this.contentFinder = contentFinder;
-            this.handler = new ContentRouteHandler();
+            this.controllerFinder = controllerFinder;
+            this.handler = new ContentRouteHandler(controllerFinder);
         }
 
         /// <summary>
@@ -40,7 +43,7 @@
             if (item != null) {
                 // We have found a content item so return this and the action route data
                 RouteData data = new RouteData(this, handler);
-                data.Values["content-item"] = item;
+                data.Values.SetContentItem(item);
                 data.Values["action"] = action;
                 return data;
             }
@@ -55,7 +58,34 @@
         /// <param name="values">The information passed to the route with which it will attempt to return a virtual path</param>
         /// <returns>The VirtualPathData for the mapped url or null if there was no match</returns>
         public override System.Web.Routing.VirtualPathData GetVirtualPath(System.Web.Routing.RequestContext requestContext, System.Web.Routing.RouteValueDictionary values) {
-            throw new NotImplementedException();
+            if (requestContext.RouteData == null) {
+                throw new ArgumentException("requestContext must have a non-null RouteData object", "requestContext");
+            }
+
+            // Setup default values if necessary
+            RouteValueDictionary currentValues = requestContext.RouteData.Values ?? new RouteValueDictionary();
+            values = values ?? new RouteValueDictionary();
+
+            // Extract the content item from either the values or if not there then the values in the requestContext
+            ContentItem item = values.GetContentItem() ?? currentValues.GetContentItem();
+            if ( item == null ) {
+                // There is no content item to match
+                return null;
+            }
+
+            // Build the url from each ContentItem's url segment
+            string url = item.UrlSegment;
+            while (item.Parent != null) {
+                item = item.Parent;
+                url = item.UrlSegment + "/" + url;
+            }
+
+            // Add on an action segment if the action is not the default
+            string action = values["action"] as String ?? "index";
+            if (action != "index") {
+                url = url + "/" + action;
+            }
+            return new VirtualPathData(this, url);
         }
     }
 }
