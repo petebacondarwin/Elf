@@ -67,7 +67,7 @@
             using (var kernel = TestHelper.CreateKernel()) {
                 using (var session = kernel.Get<ISession>()) {
                     DatabaseHelper.GenerateDatabase(session);
-                    ContentRoute route = new ContentRoute(new ContentFinder(session), kernel.Get<IControllerFinder>());
+                    ContentRoute route = kernel.Get<ContentRoute>();
                     RequestContext requestContext = new RequestContext(new StubHttpContextForRouting(), new RouteData());
 
                     Page homePage = session.QueryOver<Page>().Where(p=>p.UrlSegment == "~").SingleOrDefault();

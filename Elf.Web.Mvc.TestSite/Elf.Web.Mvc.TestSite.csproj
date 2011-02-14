@@ -147,7 +147,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Create.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Details.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Edit.cshtml" />
+    <Content Include="Modules\Main\Views\Page\Index.cshtml" />
+    <Content Include="Modules\Main\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Page\Create.cshtml" />
@@ -159,11 +163,7 @@
     <Content Include="Views\Page\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Modules\Main\Views\Page\Create.cshtml" />
-    <Content Include="Modules\Main\Views\Page\Details.cshtml" />
-    <Content Include="Modules\Main\Views\Page\Edit.cshtml" />
-    <Content Include="Modules\Main\Views\Page\Index.cshtml" />
-    <Content Include="Modules\Main\Views\Web.config" />
+    <Content Include="Views\Page\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

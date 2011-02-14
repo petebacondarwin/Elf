@@ -1,0 +1,28 @@
+﻿@model Elf.Web.Mvc.TestSite.Modules.Main.Models.Page
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Page</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">@Model.Title</div>
+
+    <div class="display-label">NavigationTitle</div>
+    <div class="display-field">@Model.NavigationTitle</div>
+
+    <div class="display-label">BodyText</div>
+    <div class="display-field">@Model.BodyText</div>
+
+    <div class="display-label">UrlSegment</div>
+    <div class="display-field">@Model.UrlSegment</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

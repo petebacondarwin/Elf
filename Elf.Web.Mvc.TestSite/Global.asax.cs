@@ -7,6 +7,8 @@ using System.Web.Routing;
 using Ninject;
 using Elf.Persistence;
 using Elf.Web.Mvc.Routing;
+using Elf.Web.Mvc.TestSite.Modules.Main;
+using Ninject.Parameters;
 
 namespace Elf.Web.Mvc.TestSite {
     /// <summary>
@@ -17,12 +19,17 @@ namespace Elf.Web.Mvc.TestSite {
     /// which automatically injects dependencies into the controllers and views as required.
     /// </remarks>
     public class MvcApplication : Ninject.Web.Mvc.NinjectHttpApplication {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
-        }
-
+        /// <summary>
+        /// The scope of the content route - this stops the session from being disposed before we are ready
+        /// </summary>
+        Ninject.Activation.Blocks.IActivationBlock ScopeBlock;
+        
         public void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.Add(Kernel.Get<ContentRoute>());
+
+            ScopeBlock = Kernel.BeginBlock();
+            routes.Add(ScopeBlock.Get<ContentRoute>());
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
@@ -33,16 +40,19 @@ namespace Elf.Web.Mvc.TestSite {
         protected override void OnApplicationStarted() {
             AreaRegistration.RegisterAllAreas();
 
-            RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
         }
 
         protected override Ninject.IKernel CreateKernel() {
-            var kernel = new StandardKernel();
+            var kernel = new SiteSettings().CreateKernel();
 
             // Load all the modules in this website
             kernel.Load(System.Reflection.Assembly.GetExecutingAssembly());
             return kernel;
+        }
+
+        protected override void OnApplicationStopped() {
+            ScopeBlock.Dispose();
         }
     }
 }

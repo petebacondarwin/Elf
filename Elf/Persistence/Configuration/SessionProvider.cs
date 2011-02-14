@@ -18,7 +18,8 @@ namespace Elf.Persistence.Configuration {
         /// Create the Session
         /// </summary>
         protected override ISession CreateInstance(Ninject.Activation.IContext context) {
-            return this.sessionFactory.OpenSession();
+            ISession session = this.sessionFactory.OpenSession();
+            return session;
         }
     }
 }

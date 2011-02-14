@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Routing\ContentHttpHandler.cs" />
     <Compile Include="Routing\ContentRoute.cs" />
     <Compile Include="Routing\ContentRouteHandler.cs" />
     <Compile Include="ControllerFinder.cs" />

@@ -1,4 +1,7 @@
-﻿namespace Elf.Web.Mvc {
+﻿using NHibernate;
+using Elf.Persistence.Configuration;
+using Ninject.Parameters;
+namespace Elf.Web.Mvc {
     /// <summary>
     /// The Mvc specific Ninject bindings
     /// </summary>
@@ -8,7 +11,7 @@
         /// </summary>
         public override void Load() {
             Kernel.Bind<IControllerFinder>().To<ControllerFinder>().InSingletonScope();
-            Kernel.Bind<Routing.ContentRoute>().ToSelf();
+            Kernel.Bind<Routing.ContentRoute>().ToSelf().InSingletonScope();
         }
     }
 }

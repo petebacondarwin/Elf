@@ -3,6 +3,9 @@
     using System.Web.SessionState;
     using System.Web.Mvc;
     using System.Web;
+    using Elf.Persistence.Entities;
+    using Elf.Web.Mvc.Utils;
+    using System;
 
     /// <summary>
     /// Our own route handler that uses our own MvcHandler instead of the built-in one.
@@ -30,12 +33,20 @@
         /// <param name="requestContext"></param>
         /// <returns></returns>
         protected override IHttpHandler GetHttpHandler(RequestContext requestContext) {
+            // Get the content item that the route found for us
+            ContentItem item = requestContext.RouteData.Values.GetContentItem();
+            if (item == null) {
+                throw new ArgumentException("requestContext must contain a valid Content Item", "requestContext");
+            }
 
-            // We don't know what the controller is yet.
-            // So we can't call this here, since GetSessionStateBehavior uses IControllerFactory.GetControllerSessionBehavior.
-            // => requestContext.HttpContext.SetSessionStateBehavior(GetSessionStateBehavior(requestContext));
-            // We'll do it inside the ContentHttpHandler later instead
-            return new ContentHttpHandler(requestContext, controllerFinder);
+            // The main point of this class is that we are going to find the correct controller from the current ContentItem
+            string controllerName = controllerFinder.FindControllerNameFor(item);
+
+            // MVC expects the controller to be named in the RouteData so add that now that we know it
+            requestContext.RouteData.Values["controller"] = controllerName;
+            requestContext.HttpContext.SetSessionStateBehavior(GetSessionStateBehavior(requestContext));
+
+            return new MvcHandler(requestContext);
         }
     }
 }

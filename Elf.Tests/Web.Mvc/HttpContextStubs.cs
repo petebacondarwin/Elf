@@ -23,6 +23,10 @@ namespace Elf.Tests.Web.Mvc {
         public override HttpResponseBase Response {
             get { return _response; }
         }
+
+        public override void SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior sessionStateBehavior) {
+            // Do nothing - the base class throws NotImplementedException
+        }
     }
 
     public class StubHttpRequestForRouting : HttpRequestBase {
