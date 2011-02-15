@@ -79,7 +79,7 @@
     <Compile Include="TestHelper.cs" />
     <Compile Include="Web.Mvc\ContentRouteHandlerTests.cs" />
     <Compile Include="Web.Mvc\ControllerFinderTests.cs" />
-    <Compile Include="Web.Mvc\HttpContextStubs.cs" />
+    <Compile Include="Web.Mvc\Mocks.cs" />
     <Compile Include="Web.Mvc\RoutingTests.cs" />
   </ItemGroup>
   <ItemGroup>

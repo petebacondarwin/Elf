@@ -13,26 +13,10 @@ using System.Web.SessionState;
 
 namespace Elf.Tests.Web.Mvc {
     public class ContentRouteHandlerTests {
-        #region Mocks
-        class MockControllerFactory : IControllerFactory {
-            public IController CreateController(RequestContext requestContext, string controllerName) {
-                return new PageController();
-            }
-
-            public SessionStateBehavior GetControllerSessionBehavior(RequestContext requestContext, string controllerName) {
-                return SessionStateBehavior.Default;
-            }
-
-            public void ReleaseController(IController controller) {
-                // Do nothing
-            }
-        }
-#endregion Mocks
-
         [Fact]
         public void GetsAContentHttpHandler() {
-            ControllerBuilder.Current.SetControllerFactory(new MockControllerFactory());
-            RequestContext requestContext = new RequestContext(new StubHttpContextForRouting(),new RouteData());
+            ControllerBuilder.Current.SetControllerFactory(Mocks.MockupControllerFactory().Object);
+            RequestContext requestContext = new RequestContext(Mocks.MockupHttpContext("/").Object,new RouteData());
             requestContext.RouteData.Values.SetContentItem(new Page());
             IRouteHandler routeHandler = new ContentRouteHandler(new ControllerFinder(new Configuration.AssemblyList() { GetType().Assembly }));
 
@@ -46,7 +30,7 @@ namespace Elf.Tests.Web.Mvc {
         [Fact]
         public void MustHaveAContentItemInRequestContext() {
             IRouteHandler routeHandler = new ContentRouteHandler(new ControllerFinder(new Configuration.AssemblyList() { GetType().Assembly }));
-            RequestContext requestContext = new RequestContext(new StubHttpContextForRouting(), new RouteData());
+            RequestContext requestContext = new RequestContext(Mocks.MockupHttpContext("/").Object, new RouteData());
             
             Assert.Throws<ArgumentException>( () => routeHandler.GetHttpHandler(requestContext) );
         }

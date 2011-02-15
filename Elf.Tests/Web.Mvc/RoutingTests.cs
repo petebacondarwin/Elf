@@ -26,21 +26,21 @@
                     ContentRoute route = new ContentRoute(new ContentFinder(session), kernel.Get<IControllerFinder>());
 
                     // A basic Page is retrieved by path, with default action of "index"
-                    var routeData = route.GetRouteData(new StubHttpContextForRouting("~/child"));
+                    var routeData = route.GetRouteData(Mocks.MockupHttpContext("~/child").Object);
                     Assert.NotNull(routeData);
                     Assert.IsType<Page>(routeData.Values.GetContentItem());
                     Assert.Equal("child", routeData.Values.GetContentItem().UrlSegment);
                     Assert.Equal("index", routeData.Values["action"]);
 
                     // A basic Page is retrieved by path with a specified action "display"
-                    routeData = route.GetRouteData(new StubHttpContextForRouting("~/child/display"));
+                    routeData = route.GetRouteData(Mocks.MockupHttpContext("~/child/display").Object);
                     Assert.NotNull(routeData);
                     Assert.IsType<Page>(routeData.Values.GetContentItem());
                     Assert.Equal("child",routeData.Values.GetContentItem().UrlSegment);
                     Assert.Equal("display", routeData.Values["action"]);
 
                     // Another page further down the tree is retrieved
-                    routeData = route.GetRouteData(new StubHttpContextForRouting("~/child/grand-child"));
+                    routeData = route.GetRouteData(Mocks.MockupHttpContext("~/child/grand-child").Object);
                     Assert.NotNull(routeData);
                     Assert.IsType<Page>(routeData.Values.GetContentItem());
                     Assert.Equal("grand-child",routeData.Values.GetContentItem().UrlSegment);
@@ -48,11 +48,11 @@
                     Assert.Equal("index", routeData.Values["action"]);
 
                     // More than one extra url segment after a valid content item does not match
-                    routeData = route.GetRouteData(new StubHttpContextForRouting("~/child/display/1"));
+                    routeData = route.GetRouteData(Mocks.MockupHttpContext("~/child/display/1").Object);
                     Assert.Null(routeData);
 
                     // The application root item matches to the HomePage with specified action "moose"
-                    routeData = route.GetRouteData(new StubHttpContextForRouting("~/moose"));
+                    routeData = route.GetRouteData(Mocks.MockupHttpContext("~/moose").Object);
                     Assert.NotNull(routeData);
                     Assert.IsType<HomePage>(routeData.Values.GetContentItem());
                     Assert.Equal("~",routeData.Values.GetContentItem().UrlSegment);
@@ -68,7 +68,7 @@
                 using (var session = kernel.Get<ISession>()) {
                     DatabaseHelper.GenerateDatabase(session);
                     ContentRoute route = kernel.Get<ContentRoute>();
-                    RequestContext requestContext = new RequestContext(new StubHttpContextForRouting(), new RouteData());
+                    RequestContext requestContext = new RequestContext(Mocks.MockupHttpContext("/").Object, new RouteData());
 
                     Page homePage = session.QueryOver<Page>().Where(p=>p.UrlSegment == "~").SingleOrDefault();
                     Page childPage = session.QueryOver<Page>().Where(p => p.UrlSegment == "child").SingleOrDefault();
