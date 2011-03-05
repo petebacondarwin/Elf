@@ -5,14 +5,15 @@
     using Elf.Persistence.Entities;
     using Elf.Web.Mvc.Utils;
 
+    /// <summary>
+    /// A route that matches urls to content items.  See <see cref="ContentRoute.GetRouteData" /> for more information.
+    /// </summary>
     public class ContentRoute : System.Web.Routing.RouteBase {
         readonly IContentFinder contentFinder;
-        readonly IControllerFinder controllerFinder;
         readonly IRouteHandler handler;
-        public ContentRoute(IContentFinder contentFinder, IControllerFinder controllerFinder) {
+        public ContentRoute(IContentFinder contentFinder, ContentRouteHandler handler) {
             this.contentFinder = contentFinder;
-            this.controllerFinder = controllerFinder;
-            this.handler = new ContentRouteHandler(controllerFinder);
+            this.handler = handler;
         }
 
         /// <summary>

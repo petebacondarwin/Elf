@@ -12,11 +12,11 @@
     /// To modify these basic settings you can either instantiate the class and access its properties
     /// or more cleanly derive from it and implement your modifications in the derived class's constructor.
     /// </remarks>
-    public class BaseSettings {
+    public class ApplicationSettings {
         /// <summary>
         /// Create a basic settings object for configuring the system.
         /// </summary>
-        public BaseSettings() {
+        public ApplicationSettings() {
             Modules = new List<INinjectModule>();
             Assemblies = new AssemblyList();
 
@@ -35,7 +35,7 @@
         /// <summary>
         /// The configuration of the database to use to store persistent entities
         /// </summary>
-        public IPersistenceConfigurer DatabaseSettings { get; protected set; }
+        public IPersistenceConfigurer DatabaseSettings { get; set; }
 
         /// <summary>
         /// Create a new Dependency Injection container from the settings
@@ -43,7 +43,7 @@
         /// <returns>A newly configured kernel</returns>
         public virtual IKernel CreateKernel() {
             // Create a new kernel from the core module.
-            IKernel kernel = new StandardKernel(new CoreModule());
+            IKernel kernel = new StandardKernel(new CoreServices());
 
             // Bind the specified assembly list and database configuration
             BindAssemblyListToKernel(kernel);

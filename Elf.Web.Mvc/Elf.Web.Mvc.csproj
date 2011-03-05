@@ -40,6 +40,9 @@
     <Reference Include="Ninject">
       <HintPath>..\Libraries\Ninject\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\Libraries\Ninject\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -51,11 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentController.cs" />
+    <Compile Include="MvcApplication.cs" />
     <Compile Include="Routing\ContentRoute.cs" />
     <Compile Include="Routing\ContentRouteHandler.cs" />
     <Compile Include="ControllerFinder.cs" />
-    <Compile Include="MvcModule.cs" />
-    <Compile Include="MvcSettings.cs" />
+    <Compile Include="Configuration\MvcServices.cs" />
+    <Compile Include="Configuration\MvcApplicationSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Utils\SecurityUtil.cs" />

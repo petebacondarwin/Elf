@@ -8,7 +8,7 @@
     /// <summary>
     /// The core Ninject bindings.
     /// </summary>
-    public class CoreModule : NinjectModule {
+    public class CoreServices : NinjectModule {
         /// <summary>
         /// Load the bindings specified in this module into the kernel.
         /// </summary>

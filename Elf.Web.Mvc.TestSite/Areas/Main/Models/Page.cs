@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using Elf.Persistence.Entities;
 
-namespace Elf.Web.Mvc.TestSite.Modules.Main.Models {
+namespace Elf.Web.Mvc.TestSite.Areas.Main.Models {
     public class Page : ContentItem {
         [Required]
         public virtual string Title { get; set; }

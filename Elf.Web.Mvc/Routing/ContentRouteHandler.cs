@@ -15,6 +15,7 @@
         /// <summary>
         /// Create a new default content route handler
         /// </summary>
+        /// <param name="controllerFinder">A services that can find a controller for a content item</param>
         public ContentRouteHandler(IControllerFinder controllerFinder) : base() {
             this.controllerFinder = controllerFinder;
         }
@@ -22,7 +23,8 @@
         /// <summary>
         /// Create a content route handler with the provided controller factory
         /// </summary>
-        /// <param name="controllerFactory">The object that will create our controllers for us.</param>
+        /// <param name="controllerFinder">A services that can find a controller for a content item</param>
+        /// <param name="controllerFactory">The object that will create our controllers for us - this is only used to provide a non-default controller Factory.</param>
         public ContentRouteHandler(IControllerFinder controllerFinder, IControllerFactory controllerFactory) : base(controllerFactory) {
             this.controllerFinder = controllerFinder;
         }
@@ -30,7 +32,7 @@
         /// <summary>
         /// Get a Http Hander for the given request 
         /// </summary>
-        /// <param name="requestContext"></param>
+        /// <param name="requestContext">The request that will be handled by this HttpHandler</param>
         /// <returns></returns>
         protected override IHttpHandler GetHttpHandler(RequestContext requestContext) {
             // Get the content item that the route found for us

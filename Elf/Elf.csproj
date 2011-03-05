@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\AssemblyList.cs" />
-    <Compile Include="Configuration\BaseSettings.cs" />
-    <Compile Include="Configuration\CoreModule.cs" />
+    <Compile Include="Configuration\ApplicationSettings.cs" />
+    <Compile Include="Configuration\CoreServices.cs" />
     <Compile Include="Persistence\Configuration\ConfigurationProvider.cs" />
     <Compile Include="Persistence\SchemaManager.cs" />
     <Compile Include="Persistence\Configuration\PersistenceModelProvider.cs" />

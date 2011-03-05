@@ -1,17 +1,17 @@
-﻿using NHibernate;
-using Elf.Persistence.Configuration;
-using Ninject.Parameters;
-namespace Elf.Web.Mvc {
+﻿namespace Elf.Web.Mvc.Configuration {
+    using NHibernate;
+    using Elf.Persistence.Configuration;
+    using Ninject.Parameters;
+
     /// <summary>
-    /// The Mvc specific Ninject bindings
+    /// Services provided by the Mvc library
     /// </summary>
-    public class MvcModule : Ninject.Modules.NinjectModule {
+    public class MvcServices : Ninject.Modules.NinjectModule {
         /// <summary>
         /// Load the bindings specified in this module into the kernel.
         /// </summary>
         public override void Load() {
             Kernel.Bind<IControllerFinder>().To<ControllerFinder>().InSingletonScope();
-            Kernel.Bind<Routing.ContentRoute>().ToSelf().InSingletonScope();
         }
     }
 }

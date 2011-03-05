@@ -28,12 +28,12 @@
             while (itemType.BaseType != typeof(Object)) {
                 // The convention is that controllers will be named [ContentItemTypeName]Controller
                 string controllerName = itemType.Name + "Controller";
-                foreach (Assembly assembly in assemblies) {
-                    Type controllerType = assembly.GetTypes().SingleOrDefault(type => type.Name == controllerName);
-                    // Check that the type exists and is actually an MVC controller
-                    if (controllerType != null && typeof(IController).IsAssignableFrom(controllerType)) {
-                        return controllerType;
-                    }
+                var matchingContollerType = assemblies
+                    .SelectMany(t=>t.GetTypes())
+                    .Where(t=>t.Name==controllerName && typeof(IController).IsAssignableFrom(t)).SingleOrDefault();
+                // TODO: Consider a new algorithm that searches for types that derive from ContentController<>, matching on the generic type parameter
+                if ( matchingContollerType != null ) {
+                    return matchingContollerType;
                 }
                 itemType = itemType.BaseType;
             }

@@ -6,12 +6,12 @@ using System.Web.Mvc;
 using NHibernate;
 using NHibernate.Linq;
 using Elf.Persistence.Entities;
-using Elf.Web.Mvc.TestSite.Modules.Main.Models;
+using Elf.Web.Mvc.TestSite.Areas.Main.Models;
 using Elf.Persistence;
 
-namespace Elf.Web.Mvc.TestSite.Modules.Main.Controllers
+namespace Elf.Web.Mvc.TestSite.Areas.Main.Controllers
 {
-    public class PageController : Controller
+    public class PageController : ContentController<Page>
     {
         readonly ISession session;
         readonly SchemaManager schemaManager;

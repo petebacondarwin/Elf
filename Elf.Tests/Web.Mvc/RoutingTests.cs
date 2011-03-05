@@ -23,7 +23,7 @@
             using (var kernel = TestHelper.CreateKernel()) {
                 using (var session = kernel.Get<ISession>()) {
                     DatabaseHelper.GenerateDatabase(session);
-                    ContentRoute route = new ContentRoute(new ContentFinder(session), kernel.Get<IControllerFinder>());
+                    ContentRoute route = new ContentRoute(new ContentFinder(session), kernel.Get<ContentRouteHandler>());
 
                     // A basic Page is retrieved by path, with default action of "index"
                     var routeData = route.GetRouteData(Mocks.MockupHttpContext("~/child").Object);

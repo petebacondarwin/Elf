@@ -7,8 +7,11 @@ using System.Web.Routing;
 using Ninject;
 using Elf.Persistence;
 using Elf.Web.Mvc.Routing;
-using Elf.Web.Mvc.TestSite.Modules.Main;
+using Elf.Web.Mvc.TestSite.Areas.Main;
 using Ninject.Parameters;
+using FluentNHibernate.Cfg.Db;
+using Elf.Web.Mvc.TestSite.Areas.Main.Models;
+using System.Reflection;
 
 namespace Elf.Web.Mvc.TestSite {
     /// <summary>
@@ -18,17 +21,12 @@ namespace Elf.Web.Mvc.TestSite {
     /// Note that this class inherits from <c>Ninject.Web.Mvc.NinjectHttpApplication</c>,
     /// which automatically injects dependencies into the controllers and views as required.
     /// </remarks>
-    public class MvcApplication : Ninject.Web.Mvc.NinjectHttpApplication {
-        /// <summary>
-        /// The scope of the content route - this stops the session from being disposed before we are ready
-        /// </summary>
-        Ninject.Activation.Blocks.IActivationBlock ScopeBlock;
+    public class MvcApplication : Elf.Web.Mvc.MvcApplication {
         
         public void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            ScopeBlock = Kernel.BeginBlock();
-            routes.Add(ScopeBlock.Get<ContentRoute>());
+            RegisterContentRoute(routes);
 
             routes.MapRoute(
                 "Default", // Route name
@@ -38,21 +36,18 @@ namespace Elf.Web.Mvc.TestSite {
         }
 
         protected override void OnApplicationStarted() {
-            AreaRegistration.RegisterAllAreas();
+            base.OnApplicationStarted();
 
+            AreaRegistration.RegisterAllAreas();
             RegisterRoutes(RouteTable.Routes);
         }
 
-        protected override Ninject.IKernel CreateKernel() {
-            var kernel = new SiteSettings().CreateKernel();
 
-            // Load all the modules in this website
-            kernel.Load(System.Reflection.Assembly.GetExecutingAssembly());
-            return kernel;
-        }
-
-        protected override void OnApplicationStopped() {
-            ScopeBlock.Dispose();
+        protected override Elf.Configuration.ApplicationSettings CreateSiteSettings() {
+            var settings = new Configuration.MvcApplicationSettings();
+            settings.DatabaseSettings = SQLiteConfiguration.Standard.UsingFile("|DataDirectory|\\content.db");
+            settings.AddWebAppReferencedAssemblies();
+            return settings;
         }
     }
 }
